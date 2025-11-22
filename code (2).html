@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Girlfriend?</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #ff9a9e, #fecfef, #a8edea);
+            color: #333;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+            to { text-shadow: 0 0 10px #ff6b9d, 0 0 20px #ff6b9d; }
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        #yes {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #yes:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        #no {
+            background-color: #f44336;
+            color: white;
+        }
+        #no:hover {
+            background-color: #da190b;
+        }
+        .message {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            color: #ff6b9d;
+            font-size: 2em;
+            animation: float 3s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+        .rose {
+            position: absolute;
+            color: #e91e63;
+            font-size: 1.5em;
+            animation: bloom 4s ease-in-out infinite;
+        }
+        @keyframes bloom {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        .celebration {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 10;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: #ff6b9d;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b9d;
+            animation: confetti-fall 3s linear infinite;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        .warm-message {
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    <div class="rose" id="rose1" style="top: 20%; left: 10%;">🌹</div>
+    <div class="rose" id="rose2" style="top: 30%; right: 15%; animation-delay: 1s;">🌹</div>
+    <div class="rose" id="rose3" style="bottom: 20%; left: 20%; animation-delay: 2s;">🌹</div>
+    <div class="rose" id="rose4" style="bottom: 30%; right: 10%; animation-delay: 3s;">🌹</div>
+    <h1>Will You Be My Girlfriend?</h1>
+    <p>Every moment with you feels like a dream come true. My heart beats for you, and I want to make you smile every day. Will you let me be the one to hold your hand through life's adventures?</p>
+    <div class="buttons">
+        <button id="yes">Yes! 💕</button>
+        <button id="no">No</button>
+    </div>
+    <div class="message" id="message"></div>
+    <div class="celebration" id="celebration">
+        <div id="confetti-container"></div>
+        <h2>Forever Yours! 💑</h2>
+        <p class="warm-message">You've made me the happiest person alive! Your smile lights up my world, and I promise to cherish every moment we share. I love you endlessly! 🌟❤️</p>
+        <p class="warm-message">From this day on, it's you and me against the world. Can't wait for our endless adventures, cozy nights, and a lifetime of laughter together! 🥰</p>
+        <p class="warm-message">You are my everything, my love. Let's create beautiful memories and grow old together. I adore you! 💖</p>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yes');
+        const noBtn = document.getElementById('no');
+        const message = document.getElementById('message');
+        const heartsContainer = document.getElementById('hearts');
+        const celebration = document.getElementById('celebration');
+        const confettiContainer = document.getElementById('confetti-container');
+
+        let noCount = 0;
+        const messages = [
+            "Are you sure? My heart is yours if you say yes! 😘",
+            "Come on, give love a chance! 🌹",
+            "You're breaking my heart... but I'll keep loving you! 💔",
+            "One more click and I'll serenade you with love songs! 🎶",
+            "Okay, but imagine endless cuddles and kisses? 🐻💋",
+            "Fine, but you're missing out on my heart-shaped pancakes! 🍝❤️",
+            "Last chance! Say yes and let's dance in the rain! 📸🌧️",
+            "Alright, but my love for you is eternal! 😉"
+        ];
+
+        // Function to create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heartsContainer.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }
+
+        // Function to create confetti
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confettiContainer.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        // Start creating hearts
+        setInterval(createHeart, 500);
+
+        noBtn.addEventListener('click', () => {
+            if (noCount < messages.length) {
+                message.textContent = messages[noCount];
+                noCount++;
+                // Make the "No" button smaller and move it randomly
+                noBtn.style.fontSize = (1.2 - noCount * 0.1) + 'em';
+                noBtn.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px)`;
+            } else {
+                message.textContent = "Okay, you win... but my love for you never will! 😍";
+                noBtn.style.display = 'none';
+            }
+        });
+
+        yesBtn.addEventListener('click', () => {
+            message.textContent = "Yay! I knew you'd say yes! Let's celebrate our love! 🎉💖";
+            yesBtn.textContent = "Forever Yours! 💑";
+            noBtn.style.display = 'none';
+            // Show celebration overlay
+            celebration.style.display = 'flex';
+            createConfetti();
+            // Extra hearts on yes
+            for (let i = 0; i < 20; i++) {
+                setTimeout(createHeart, i * 100);
+            }
+        });
+    </script>
+</body>
+</html>
